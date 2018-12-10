@@ -100,7 +100,12 @@ int main()
       step/=10;
     }
   printGrid(grid);
+  cout << "------------------------------------------------\n";
   cout << seconds << endl;
+
+  cout << "------------------------------------------------\n";
+  cout << "If you don't see letters in the print above\nTry lowering the value of step by a factor of 10\n";
+  cout << "------------------------------------------------\n";
 
  
 }
