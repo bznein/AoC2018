@@ -12,7 +12,6 @@ long long manhattanDistance(coords c1, coords c2)
   return std::abs(c1.first-c2.first)+std::abs(c1.second-c2.second);
 }
 
-
 class Point
 {
 public:
@@ -62,7 +61,22 @@ void printGrid(const vector<Point> & grid)
     }
 }
 
+void tempMinimum(std::vector<Point>& grid, int steps, int& seconds)
+{
 
+  long long disp, oldDispersion;
+  
+  disp=dispersion(grid);
+  do
+    {
+      oldDispersion=disp;
+      advanceGrid(grid,steps);
+      disp=dispersion(grid);
+      seconds+=steps;
+    } while(disp<oldDispersion);
+  advanceGrid(grid,-steps);
+  seconds-=steps;
+}
 
 int main()
 {
@@ -79,16 +93,14 @@ int main()
     }
 
   int seconds=0;
-  long long disp, oldDispersion;
-  disp=dispersion(grid);
-  do
+  int step=1000;
+  while (step!=0)
     {
-      oldDispersion=disp;
-      advanceGrid(grid);
-      disp=dispersion(grid);
-    } while(disp<oldDispersion);
-  advanceGrid(grid,-1);
+      tempMinimum(grid,step,seconds);
+      step/=10;
+    }
   printGrid(grid);
+  cout << seconds << endl;
 
  
 }
