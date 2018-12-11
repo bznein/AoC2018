@@ -36,7 +36,7 @@ int getPowerLevel(int i, int j)
 }
 
 
-std::tuple<coords,int> getMaxPower(const vector<vector<int>>& powers, int square_size, map<coords,int>& totSquarePowers)
+std::tuple<coords,int> getMaxPower(const vector<vector<int>>& powers, int square_size, vector<vector<int>>& totSquarePowers)
 {
   int largestTotalPower=-std::numeric_limits<int>::max();
 
@@ -48,7 +48,7 @@ std::tuple<coords,int> getMaxPower(const vector<vector<int>>& powers, int square
         /* If square_size is 1, we have to populate totSquarePowers
          with the base powers */
         if (square_size==1)
-          totSquarePowers[c]=powers[i][j];
+          totSquarePowers[i-1][j-1]=powers[i-1][j-1];
         else
           {
             /* Otherwise we just have to increase its totSquarePowers with the
@@ -60,10 +60,10 @@ std::tuple<coords,int> getMaxPower(const vector<vector<int>>& powers, int square
                 tempSum+=powers[i-1+k][j+square_size-1-1];
               }
             tempSum+=powers[i+square_size-1-1][j+square_size-1-1];
-            totSquarePowers[c]+=tempSum;
-            if (totSquarePowers[c]>largestTotalPower)
+            totSquarePowers[i-1][j-1]+=tempSum;
+            if (totSquarePowers[i-1][j-1]>largestTotalPower)
               {
-                largestTotalPower=totSquarePowers[c];
+                largestTotalPower=totSquarePowers[i-1][j-1];
                 maxCoords=c;
               }
           }
@@ -74,7 +74,7 @@ std::tuple<coords,int> getMaxPower(const vector<vector<int>>& powers, int square
 int main()
 {
   auto powers=vector<vector<int>>(GRID_SIZE,vector<int>(GRID_SIZE,0));
-  map<coords,int> totSquarePowers;
+  auto totSquarePowers=vector<vector<int>>(GRID_SIZE,vector<int>(GRID_SIZE,0));
   for (int i=1; i<=GRID_SIZE; ++i)
     for (int j=1; j<=GRID_SIZE; ++j)
         powers[i-1][j-1]=getPowerLevel(coords(i,j));
