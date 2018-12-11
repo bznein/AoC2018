@@ -35,11 +35,15 @@ int main()
 {
 
 
-  map<coords,int> powers;
+  auto powers=vector<vector<int>>(GRID_SIZE,vector<int>(GRID_SIZE,0));
   int largestTotalPower=-std::numeric_limits<int>::max();
 
   int tempLowest;
   coords maxCoords;
+  for (int i=1; i<=GRID_SIZE; ++i)
+    for (int j=1; j<=GRID_SIZE; ++j)
+      powers[i-1][j-1]=getPowerLevel(coords(i,j));
+
   for (int i=1; i<=GRID_SIZE-SQUARE_SIZE; ++i)
     for (int j=1; j<=GRID_SIZE-SQUARE_SIZE; ++j )
       {
@@ -48,10 +52,7 @@ int main()
           {
             for (int l=0; l<SQUARE_SIZE; ++l)
               {
-                coords temp=coords(i+k,j+l);
-                if (powers.find(temp)==powers.end())
-                  powers[temp]=getPowerLevel(temp);
-                tempLowest+=powers[temp];
+                tempLowest+=powers[i+k-1][j+l-1];
               }
           }
         if (tempLowest>largestTotalPower)

@@ -36,19 +36,19 @@ int getPowerLevel(int i, int j)
 }
 
 
-std::tuple<coords,int> getMaxPower(const map<coords,int>& powers, int square_size, map<coords,int>& totSquarePowers)
+std::tuple<coords,int> getMaxPower(const vector<vector<int>>& powers, int square_size, map<coords,int>& totSquarePowers)
 {
   int largestTotalPower=-std::numeric_limits<int>::max();
 
   coords maxCoords;
-  for (int i=1; i<=GRID_SIZE-square_size+1; ++i)
-    for (int j=1; j<=GRID_SIZE-square_size+1; ++j )
+  for (int i=1; i<=GRID_SIZE-square_size; ++i)
+    for (int j=1; j<=GRID_SIZE-square_size; ++j )
       {
         coords c(i,j);
         /* If square_size is 1, we have to populate totSquarePowers
          with the base powers */
         if (square_size==1)
-          totSquarePowers[c]=powers.at(c);
+          totSquarePowers[c]=powers[i][j];
         else
           {
             /* Otherwise we just have to increase its totSquarePowers with the
@@ -56,10 +56,10 @@ std::tuple<coords,int> getMaxPower(const map<coords,int>& powers, int square_siz
             int tempSum=0;
             for (int k=0; k<square_size-1; ++k)
               {
-                tempSum+=powers.at(coords(i+square_size-1,j+k));
-                tempSum+=powers.at(coords(i+k,j+square_size-1));
+                tempSum+=powers[i-1+square_size-1][j+k-1];
+                tempSum+=powers[i-1+k][j+square_size-1-1];
               }
-            tempSum+=powers.at(coords(i+square_size-1,j+square_size-1));
+            tempSum+=powers[i+square_size-1-1][j+square_size-1-1];
             totSquarePowers[c]+=tempSum;
             if (totSquarePowers[c]>largestTotalPower)
               {
@@ -73,13 +73,11 @@ std::tuple<coords,int> getMaxPower(const map<coords,int>& powers, int square_siz
 
 int main()
 {
-  map<coords,int> powers;
+  auto powers=vector<vector<int>>(GRID_SIZE,vector<int>(GRID_SIZE,0));
   map<coords,int> totSquarePowers;
   for (int i=1; i<=GRID_SIZE; ++i)
     for (int j=1; j<=GRID_SIZE; ++j)
-      {
-        powers[coords(i,j)]=getPowerLevel(coords(i,j));
-      }
+        powers[i-1][j-1]=getPowerLevel(coords(i,j));
   int max_power=-std::numeric_limits<int>::max();
   int best_size;
   coords maxC;
@@ -91,8 +89,6 @@ int main()
           max_power=power;
           best_size=i;
         }
-      if (!(i%10))
-      cout << "Computed for square of size: " << i << endl;
     }
 
   cout << maxC.first << "," << maxC.second << ","  << best_size << endl;
