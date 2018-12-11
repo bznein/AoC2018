@@ -93,7 +93,7 @@ int main()
     }
 
   int seconds=0;
-  int step=1000;
+  int step=10000;
   while (step!=0)
     {
       tempMinimum(grid,step,seconds);
