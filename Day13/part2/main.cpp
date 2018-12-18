@@ -252,12 +252,12 @@ int main()
 
             }
           else
-            t[i][j]=' ';
+            t[j][i]=' ';
         }
       ++j;
     }
 
-  //printV(t,carts,w,h);
+  // printV(t,carts,w,h);
   while(true)
     {
       auto c = nextToMove(carts);
@@ -266,7 +266,7 @@ int main()
           c->move(t,carts);
           c=nextToMove(carts);
         }
-      //   printV(t,carts,w,h);
+      //    printV(t,carts,w,h);
       if (stop)
         {
           cout << carts[0].p.second<<","<<carts[0].p.first<<endl;
@@ -274,6 +274,8 @@ int main()
         }
       resetMoveFlags(carts);
     }
+
+
 }
 
 
