@@ -7,7 +7,7 @@ using namespace std;
 
 map<int, string> codes;
 
-int behaviour(int a, int b, int c, std::vector<int> regBefore, std::vector<int> regAfter)
+int behaviour(int opcode, int a, int b, int c, std::vector<int> regBefore, std::vector<int> regAfter)
 {
 
   int tot=0;
@@ -70,6 +70,8 @@ int behaviour(int a, int b, int c, std::vector<int> regBefore, std::vector<int> 
 
 
 
+
+
   return tot;
 
 }
@@ -103,7 +105,7 @@ int main()
         if (c.size()>0)
         ra.push_back(stoi(c));
 
-      if (behaviour(regA,regB,res,rb,ra)>=3)
+      if (behaviour(stoi(cmd[0]),regA,regB,res,rb,ra)>=3)
         totRes++;
       getline(ifs,s);
 

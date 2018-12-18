@@ -160,13 +160,6 @@ int main()
   map<int,int> codes;
 
 
-  for (auto i : manual)
-    {
-      for (auto c: i)
-        cout << setw(2) << setfill('0') << c << " ";
-      cout << endl;
-    }
-
   for (auto it=manual.begin(); it!=manual.end();)
     {
       auto m=*it;
@@ -183,14 +176,6 @@ int main()
         ++it;
     }
 
-for( auto const& [key, val] : codes )
-{
-    std::cout << key         // string (key)
-              << ':'  
-              << val        // string's value
-              << std::endl ;
-}
-
 
   auto ifs2= ifstream("input2.txt");
 
@@ -201,8 +186,7 @@ for( auto const& [key, val] : codes )
       applyFunction(regs,codes[a[0]],a[1],a[2],a[3]);
 
     }
-  for (auto i: regs)
-    cout << i << " ";
+  cout << regs[0];
   cout << endl;
-}
+}     
 

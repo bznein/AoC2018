@@ -48,7 +48,7 @@ int main()
       if (i!=j && differByOne(ss[i],ss[j]))
         {
         printCommonLetters(ss[i],ss[j]);
-        break;
+        return 0;
         }
 }
 
