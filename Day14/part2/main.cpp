@@ -47,7 +47,6 @@ int main()
 
   auto target=getDigits(N_RECIPES);
 
-  bool first_round=true;
   int cur_match=-1;
   if (target[0]==3)
     {
@@ -73,12 +72,6 @@ int main()
              cout << scores.size()-target.size() << endl;
              exit(0);
              }
-        }
-      /* Advance elves */
-      if (first_round)
-        {
-          first_round=false;
-          continue;
         }
       curPos[0]=(1+curPos[0]+scores[curPos[0]])%scores.size();
       curPos[1]=(1+curPos[1]+scores[curPos[1]])%scores.size();

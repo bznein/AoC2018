@@ -46,20 +46,12 @@ int main()
   scores.reserve(N_RECIPES+10);
   scores[0]=3;
   scores[1]=7;
-
-  bool first_round=true;;
   while(scores.size()<N_RECIPES+10)
     {
       int sum=scores[curPos[0]]+scores[curPos[1]];
       auto l=getDigits(sum);
       for (auto i: l)
         scores.push_back(i);
-      /* Advance elves */
-      if (first_round)
-        {
-          first_round=false;
-          continue;
-        }
       curPos[0]=(1+curPos[0]+scores[curPos[0]])%scores.size();
       curPos[1]=(1+curPos[1]+scores[curPos[1]])%scores.size();
     }
