@@ -1,0 +1,1 @@
+As with many others *elf code* puzzles, no real "code" solve. This is tailored for my specific input. It can be extented to similar other by changing the value of REGZERO_INSTRUCTION to the only instruction in your input that uses register 0 and the cout on line 116 with the other register used in that instruction.
