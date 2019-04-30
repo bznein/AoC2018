@@ -7,6 +7,7 @@
 #include <functional>
 #include <map>
 #include <set>
+
 using namespace std;
 
 using maze = std::vector<std::vector<char>>;
@@ -24,7 +25,6 @@ int manhattanDistance(coords c1, coords c2)
   return std::abs(c1.first-c2.first)+std::abs(c1.second-c2.second);
 }
 
-
 auto reconstructPath(map<coords,coords> cameFrom, coords current)
 {
   std::vector<coords> path{current};
@@ -35,6 +35,7 @@ auto reconstructPath(map<coords,coords> cameFrom, coords current)
     }
   return path;
 }
+
 vector<coords> shortestPath(const maze &m ,coords from, coords to)
 {
   set<coords> closedSet;
@@ -44,8 +45,6 @@ vector<coords> shortestPath(const maze &m ,coords from, coords to)
   map<coords,int> fScore;
   
   openSet.insert(from);
-
-
 
   gScore[from]=0;
   fScore[from]=manhattanDistance(from,to);
@@ -87,20 +86,6 @@ vector<coords> shortestPath(const maze &m ,coords from, coords to)
               openSet.insert(neighbor);
             else if (gScore.find(neighbor)!=gScore.end() && tentative_gScore>=gScore[neighbor])
               continue;
-            /* else if (gScore.find(neighbor)!=gScore.end() && tentative_gScore==gScore[neighbor])
-              {
-                auto a=reconstructPath(cameFrom, current);
-                auto b=reconstructPath(cameFrom, neighbor);
-                for (int i=0; i<a.size() && i<b.size(); ++i)
-                  {
-                    if (a[i].first<b[i].first)
-                      continue;
-                    if (a[i].first==b[i].first && a[i].second<b[i].second)
-                      continue;
-                  }
-
-
-                  }*/
 
             cameFrom[neighbor]=current;
             gScore[neighbor] = tentative_gScore;
@@ -109,7 +94,6 @@ vector<coords> shortestPath(const maze &m ,coords from, coords to)
     }
   return vector<coords>();
 }
-
 
 class Unit
 {
@@ -127,22 +111,9 @@ public:
     position.first=i;
     position.second=j;
   }
-
-
 };
 
 
-
-
-void printMaze(const maze & m)
-{
-  for (int i=0; i<m.size(); ++i, cout << endl)
-    for (int j=0; j<m[i].size(); ++j)
-      {
-          cout << m[i][j];
-      }
-  cout << endl << endl << endl;
-}
 bool isThereATroop(const maze & m, int i, int j)
 {
   if (i<0 || i>=m.size() || j<0 || j>=m[i].size())
@@ -156,11 +127,11 @@ bool isThereATroop(const maze & m, int i, int j, char c)
 }
 
 
-
 bool isThereATroop(const maze & m, coords c)
 {
   return isThereATroop(m,c.first,c.second);
 }
+
 Unit * nextToMove(vector<Unit> & units)
 {
   Unit* cand=nullptr;
@@ -200,7 +171,6 @@ vector<Unit *> getMoveSequence(vector<Unit> &units)
   return v;
 }
 
-
  bool isInRange(coords c1, coords c2)
  {
    /* Return true if c1 is in the square of c2!! */
@@ -215,14 +185,6 @@ vector<Unit *> getMoveSequence(vector<Unit> &units)
      return true;
    return false;
  }
-
-void printUnitStatus(const vector<Unit> & units)
-{
-  for (auto u: units)
-    {
-      cout << u.type << "(" << u.hp<< ")" << endl;
-    }
-}
 
  Unit* enemyToAttack(vector<Unit> & units, Unit* player)
  {
@@ -263,9 +225,6 @@ void printUnitStatus(const vector<Unit> & units)
        else if (target->type=='E')
          totE--;
        }
-
-
-
      }
  }
 
@@ -374,9 +333,6 @@ coords checkShortestPath(const maze& m,vector<coords> & path)
          }
      }
 
-
-
-
    if (bestDistance==numeric_limits<int>::max())
      return;
    auto best=shortestPath(m,player->position,chosenSquare);
@@ -386,26 +342,20 @@ coords checkShortestPath(const maze& m,vector<coords> & path)
    m[c1.first][c1.second]='.';
    m[mv.first][mv.second]=player->type;
    player->position=mv;
-
  }
-
-
-
 
 void playMove(maze & m, vector<Unit> & units)
 {
   auto v=getMoveSequence(units);
   auto playerIt=v.begin();
   while (playerIt!=v.end())
-    {
-      
+    {    
       auto player=*playerIt;
       if (player->hp<=0)
         {
           ++playerIt;
           continue;
         }
-
 
       if (totE==0 || totG==0)
         {
