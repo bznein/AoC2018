@@ -6,11 +6,12 @@
 using namespace std;
 
 
-bool exactOccurrence(const std::string& s, int occurrences)
+/* Returns true if the string s has at least one character appearing exactly o times */ 
+bool exactOccurrence(const std::string& s, int o)
 {
   for (auto c: s)
     {
-      if (std::count(s.begin(),s.end(),c)==occurrences)
+      if (std::count(s.begin(),s.end(),c)==o) 
         return true;
     }
   return false;
