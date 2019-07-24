@@ -6,7 +6,7 @@
 using namespace std;
 
 
-bool exactOccurrence(std::string s, int occurrences)
+bool exactOccurrence(const std::string& s, int occurrences)
 {
   for (auto c: s)
     {
